@@ -1,23 +1,9 @@
 #!ipxe
 
-#ifopen net{{ INTERFACE_ID }}
-#set net{{ INTERFACE_ID }}/ip {{ PUBLIC_IP }}
-#set net{{ INTERFACE_ID }}/netmask 255.255.255.0
-#set net{{ INTERFACE_ID }}/gateway {{ PUBLIC_GW }}
-#set net{{ INTERFACE_ID }}/dns 8.8.8.8
-
-#kernel http://download.proxmox.com/iso/proxmox-ve_7.1-1.iso kernel.img
-#inst.repo=http://download.proxmox.com/iso/proxmox-ve_7.1-1.iso initrd.img net.ifnames=0 biosdevname=0 ip={{ PUBLIC_IP }}::{{ PUBLIC_GW }}:255.255.255.0::eth{{ INTERFACE_ID }}:off:8.8.8.8
-#initrd http://download.proxmox.com/iso/proxmox-ve_7.1-1.iso initrd.img
-#boot
-
-
-#!ipxe
-
 set base-url http://download.proxmox.com/iso
 
-kernel ${base-url}/proxmox-ve_7.1-1.iso kernel.img
-initrd ${base-url}/proxmox-ve_7.1-1.iso initrd.img
+kernel ${base-url}/proxmox-ve_8.1-2.iso kernel.img
+initrd ${base-url}/proxmox-ve_8.1-2.iso initrd.img
 imgargs kernel.img boot=proxmox
 boot
 
