@@ -1,0 +1,24 @@
+#!ipxe
+
+set base-url http://download.proxmox.com/iso
+
+kernel ${base-url}/proxmox-ve_7.1-1.iso kernel.img
+initrd ${base-url}/proxmox-ve_7.1-1.iso initrd.img
+imgargs kernel.img boot=proxmox
+boot
+
+:proxmox
+# Configurar RAID1 com os dois SSDs
+mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda /dev/sdb
+
+# Configurar ZFS no RAID1
+zpool create -f rpool mirror /dev/md0
+zfs set compression=lz4 rpool
+zfs set atime=off rpool
+zfs set listsnapshots=on rpool
+zfs set checksum=on rpool
+
+# Criar partição de boot de 30GB no RAID1
+sgdisk -n 1:2048:+30G -t 1:EF00 /dev/md0
+
+exit
