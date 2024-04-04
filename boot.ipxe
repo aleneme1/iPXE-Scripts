@@ -2,8 +2,8 @@
 
 set base-url http://download.proxmox.com/iso
 
-kernel ${base-url}/proxmox-ve_8.1-2.iso kernel.img
-initrd ${base-url}/proxmox-ve_8.1-2.iso initrd.img
+kernel ${base-url}/proxmox-ve_7.1-1/pve/kernel.img
+initrd ${base-url}/proxmox-ve_7.1-1/pve/initrd.img
 imgargs kernel.img boot=proxmox
 boot
 
@@ -19,7 +19,6 @@ zfs set listsnapshots=on rpool
 zfs set checksum=on rpool
 
 # Criar partição de boot de 30GB no RAID1
-sgdisk -n 1:2048:+30G -t 1:EF00 /dev/md0
+sgdisk -n 1:2048:+10G -t 1:EF00 /dev/md0
 
 exit
-
